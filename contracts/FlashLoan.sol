@@ -15,29 +15,6 @@ contract Flashloan is FlashLoanSimpleReceiverBase, Arbitrage {
         Arbitrage(_routerSudoSwap, _routerSeaport)
     {}
 
-    /**
-        This function is called after your contract has received the flash loaned amount
-     */
-
-    /* function wrap() external payable {
-        //create WETH from ETH
-        if (msg.value != 0) {
-            WETH.deposit{value: msg.value}();
-        }
-        require(
-            WETH.balanceOf(address(this)) >= msg.value,
-            "Ethereum not deposited"
-        );
-    }
-
-    function unwrap(address payable recipient, uint256 amount) internal {
-        if (amount != 0) {
-            WETH.transferFrom(msg.sender, address(this), amount);
-            WETH.withdraw(amount);
-            recipient.transfer(amount);
-        }
-    }*/
-
     function executeOperation(
         address asset,
         uint256 amount,
@@ -94,10 +71,4 @@ contract Flashloan is FlashLoanSimpleReceiverBase, Arbitrage {
             referralCode
         );
     }
-
-    function getBalance(address _tokenAddress) public view returns (uint256) {
-        return WETH.balanceOf(address(this));
-    }
-
-    //function() external payable {}
 }
