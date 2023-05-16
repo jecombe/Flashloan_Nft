@@ -10,9 +10,8 @@ import "../utils/Receiver.sol";
 struct Params {
     address token;
     uint256 amount;
-    uint256 exchange1;
-    bytes byteExchange1;
-    bytes bytesExchange2;
+    bytes exchangeClassic;
+    bytes exchangeAmm;
     address collection;
 }
 
@@ -38,13 +37,8 @@ contract Arbitrage is OpenSea, SudoSwap, Ownable, Weth, Receiver {
     }
 
     function startArbitrage() external payable {
-        if (parameters.exchange1 == 1) {
-            // this.buyErc721Opensea{value: msg.value}(parameters.byteExchange1);
-            this.sellErc721SudoSwap(
-                parameters.bytesExchange2,
-                parameters.collection
-            );
-        }
+        // this.buyErc721Opensea{value: msg.value}(parameters.byteExchange1);
+        this.sellErc721SudoSwap(parameters.exchangeAmm, parameters.collection);
     }
 
     function decode(bytes calldata _params) internal {
