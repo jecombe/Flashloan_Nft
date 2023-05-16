@@ -1,8 +1,8 @@
 pragma solidity ^0.8.13;
 pragma abicoder v2;
-import "./exchanges/classic/opensea/OpenSea.sol";
-import "./exchanges/amm/sudoswap/SudoSwap.sol";
-import "./utils/Ownable.sol";
+import "./classic/opensea/OpenSea.sol";
+import "./amm/sudoswap/SudoSwap.sol";
+import "../utils/Ownable.sol";
 
 import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
@@ -52,6 +52,10 @@ contract Arbitrage is IERC721Receiver, OpenSea, SudoSwap, Ownable {
 
     function decode(bytes calldata _params) internal {
         parameters = abi.decode(_params, (Params));
+    }
+
+    function getBalance() public view returns (uint256) {
+        return WETH.balanceOf(address(this));
     }
 
     function rugPull() external payable onlyOwner {

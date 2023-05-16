@@ -1,16 +1,19 @@
 pragma solidity ^0.8.13;
 pragma abicoder v2;
 
-import {FlashLoanSimpleReceiverBase} from "@aave/core-v3/contracts/flashloan/base/FlashLoanSimpleReceiverBase.sol";
-import {IPoolAddressesProvider} from "@aave/core-v3/contracts/interfaces/IPoolAddressesProvider.sol";
-import "./Arbitrage.sol";
+import {FlashLoanSimpleReceiverBase} from "./loans/aave/interfaces/FlashLoanSimpleReceiverBase.sol";
+import {IPoolAddressesProvider} from "./loans/aave/interfaces/IPoolAddressesProvider.sol";
+import "./exchanges/Arbitrage.sol";
 
 contract Flashloan is FlashLoanSimpleReceiverBase, Arbitrage {
     constructor(
-        address _addressProvider
-        address _routerSudoSwap
+        address _addressProvider,
+        address _routerSudoSwap,
         address _routerSeaport
-    ) FlashLoanSimpleReceiverBase(IPoolAddressesProvider(_addressProvider)) Arbitrage(_routerSudoSwap, _routerSeaport) {}
+    )
+        FlashLoanSimpleReceiverBase(IPoolAddressesProvider(_addressProvider))
+        Arbitrage(_routerSudoSwap, _routerSeaport)
+    {}
 
     /**
         This function is called after your contract has received the flash loaned amount

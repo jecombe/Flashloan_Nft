@@ -7,8 +7,12 @@
 const hre = require("hardhat");
 
 async function main() {
-  const Lock = await hre.ethers.getContractFactory("Lock");
-  const lock = await Lock.deploy("YOOOOOOOOOOO");
+  const Lock = await hre.ethers.getContractFactory("Flashloan");
+  const lock = await Lock.deploy(
+    "0x0496275d34753A48320CA58103d5220d394FF77F",
+    "0x25b4EfC43c9dCAe134233CD577fFca7CfAd6748F",
+    "0x00000000000000ADc04C56Bf30aC9d3c0aAF14dC"
+  );
 
   await lock.deployed();
 
