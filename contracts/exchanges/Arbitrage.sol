@@ -36,8 +36,8 @@ contract Arbitrage is OpenSea, SudoSwap, Ownable, Weth, Receiver {
         WETH.transfer(msg.sender, WETH.balanceOf(address(this)));
     }
 
-    function startArbitrage() external payable {
-        // this.buyErc721Opensea{value: msg.value}(parameters.byteExchange1);
+    function startArbitrage(uint256 amount) external {
+        this.buyErc721Opensea{value: amount}(parameters.exchangeClassic);
         this.sellErc721SudoSwap(parameters.exchangeAmm, parameters.collection);
     }
 

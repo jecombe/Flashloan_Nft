@@ -23,11 +23,11 @@ contract Flashloan is FlashLoanSimpleReceiverBase, Arbitrage {
         bytes calldata params
     ) external override returns (bool) {
         //weth to eth
-        this.unwrapped(amount);
+        //this.unwrapped(amount);
 
         //eth to weth
-        this.wrapped(amount);
-        //this.startArbitrage{value: amount}();
+        //this.wrapped(amount);
+        this.startArbitrage(amount);
         //this.startArbitrage2();
         uint256 amountOwed = amount + premium;
         WETH.approve(address(POOL), amountOwed);
