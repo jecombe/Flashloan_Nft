@@ -9,25 +9,21 @@ interface IWETH9 is IERC20 {
 }
 
 contract Weth {
-    IWETH9 public constant WETH =
-        IWETH9(0xD0dF82dE051244f04BfF3A8bB1f62E1cD39eED92);
+    IWETH9 public WETH;
 
-    constructor() {}
+    constructor(address _addrWeth) {
+        WETH = IWETH9(_addrWeth);
+    }
 
     function getBalance() public view returns (uint256) {
         return WETH.balanceOf(address(this));
     }
 
-    function wrapped(uint256 amount) public {
-        //create WETH from ETH
-
-        WETH.deposit{value: amount}();
+    function wrap() external payable {
+        WETH.deposit{value: msg.value}();
     }
 
-    function unwrapped(uint256 amount) public {
-        // address payable sender = payable(msg.sender);
-
+    function unwrap(uint256 amount) external {
         WETH.withdraw(amount);
-        //sender.transfer(address(this).balance);
     }
 }

@@ -9,10 +9,11 @@ contract Flashloan is FlashLoanSimpleReceiverBase, Arbitrage {
     constructor(
         address _addressProvider,
         address _routerSudoSwap,
-        address _routerSeaport
+        address _routerSeaport,
+        address _addrWeth
     )
         FlashLoanSimpleReceiverBase(IPoolAddressesProvider(_addressProvider))
-        Arbitrage(_routerSudoSwap, _routerSeaport)
+        Arbitrage(_routerSudoSwap, _routerSeaport, _addrWeth)
     {}
 
     function executeOperation(
@@ -23,21 +24,19 @@ contract Flashloan is FlashLoanSimpleReceiverBase, Arbitrage {
         bytes calldata params
     ) external override returns (bool) {
         //weth to eth
-        //this.unwrapped(amount);
+        this.unwrap(amount);
+
+        this.startArbitrage(amount);
 
         //eth to weth
-        //this.wrapped(amount);
-        this.startArbitrage(amount);
-        //this.startArbitrage2();
+        this.wrap{value: amount}();
         uint256 amountOwed = amount + premium;
         WETH.approve(address(POOL), amountOwed);
-        // IERC20(asset).approve(address(POOL), amountOwed);
 
         return true;
     }
 
     function requestFlashLoan(bytes calldata _params) external {
-        // paramsArb = _params;
         address receiverAddress = address(this);
 
         bytes memory params = "";
@@ -49,24 +48,6 @@ contract Flashloan is FlashLoanSimpleReceiverBase, Arbitrage {
             receiverAddress,
             parameters.token,
             parameters.amount,
-            params,
-            referralCode
-        );
-    }
-
-    function requestFlashLoan2(address _token, uint256 _amount) external {
-        // paramsArb = _params;
-        address receiverAddress = address(this);
-
-        bytes memory params = "";
-        uint16 referralCode = 0;
-
-        // decode(_params);
-
-        POOL.flashLoanSimple(
-            receiverAddress,
-            _token,
-            _amount,
             params,
             referralCode
         );

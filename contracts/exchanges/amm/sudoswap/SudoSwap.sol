@@ -40,12 +40,10 @@ contract SudoSwap {
     ) external {
         IERC721(collection).setApprovalForAll(router, true);
 
-        // Decode variables passed in data
         PairSwapSpecific memory swap = abi.decode(_params, (PairSwapSpecific));
         PairSwapSpecific[] memory swapList = new PairSwapSpecific[](1);
         swapList[0] = swap;
 
-        // sell NFT via Swap NFT
         LSSVM.swapNFTsForToken(
             swapList,
             0,

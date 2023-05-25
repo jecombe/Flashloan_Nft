@@ -3,17 +3,12 @@ pragma solidity ^0.8.13;
 
 import "./interfaces/SeaportInterface.sol";
 
-import "../../../utils/Ownable.sol";
-
 contract OpenSea {
     AdditionalRecipient[] additionalRecipients;
-    // SellSeaport public SEAPORT;
     SeaportInterface public SEAPORT;
 
     constructor(address _router) {
         SEAPORT = SeaportInterface(_router);
-
-        //0xD5835369D4F691094D7509296CFC4DA19EFE4618
     }
 
     struct ParamsOpensea {
@@ -46,17 +41,17 @@ contract OpenSea {
             considerationToken: orderParams.considerationToken,
             considerationIdentifier: orderParams.considerationIdentifier,
             considerationAmount: orderParams.considerationAmount,
-            offerer: payable(orderParams.offerer), // your address
+            offerer: payable(orderParams.offerer),
             zone: orderParams.zone,
-            offerToken: orderParams.offerToken, // tokenAddress
+            offerToken: orderParams.offerToken,
             offerIdentifier: orderParams.offerIdentifier,
-            offerAmount: orderParams.offerAmount, // total amount
-            basicOrderType: BasicOrderType.ETH_TO_ERC721_FULL_OPEN, // ETH_TO_ERC721_FULL_OPEN
+            offerAmount: orderParams.offerAmount,
+            basicOrderType: BasicOrderType.ETH_TO_ERC721_FULL_OPEN,
             startTime: orderParams.startTime,
             endTime: orderParams.endTime,
             zoneHash: orderParams.zoneHash,
             salt: orderParams.salt,
-            offererConduitKey: orderParams.offererConduitKey, //0x0000007b02230091a7ed01230072f7006a004d60a8d4e71d599b8104250f0000,
+            offererConduitKey: orderParams.offererConduitKey,
             fulfillerConduitKey: orderParams.fulfillerConduitKey,
             totalOriginalAdditionalRecipients: orderParams
                 .totalOriginalAdditionalRecipients,
